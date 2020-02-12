@@ -21,5 +21,9 @@ app.get('/', (req, res) => {
     res.send('Hello World!!!');
 });
 
+const toDoRouter = require('./routes/todos');
+
+app.use('/todos', toDoRouter);
+
 
 app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`));
