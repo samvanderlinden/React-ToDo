@@ -16,5 +16,23 @@ router.route('/add').post((req, res) => {
         .catch(err => res.status(400).json('Error:' + err));
 });
 
+router.route('/:id').delete((req, res) => {
+    console.log(req.params.id);
+    ToDo.findByIdAndDelete(req.params.id)
+    .then(() => res.json('ToDo Deleted'))
+    .catch(err => res.status(400).json('Error:' + err));
+});
+
+router.route('/update/:id').post((req, res) => {
+    ToDo.findById(req.params.id)
+        .then(todo => { //'todo' is the todo we just got back from the database.
+            todo.todo = req.body.todo;
+            todo.save()
+                .then(() => res.json('ToDo Updated'))
+                .catch(err => res.status(400).json('Error :', err))
+        })
+        .catch(err => res.status(400).json('Error :', err))
+})
+
 module.exports = router;
 
