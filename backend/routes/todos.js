@@ -17,7 +17,8 @@ router.route('/add').post((req, res) => {
 });
 
 router.route('/:id').delete((req, res) => {
-    console.log(req.params.id);
+    // console.log(req.params.id);
+    console.log(req.params);
     ToDo.findByIdAndDelete(req.params.id)
     .then(() => res.json('ToDo Deleted'))
     .catch(err => res.status(400).json('Error:' + err));
