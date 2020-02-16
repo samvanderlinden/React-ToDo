@@ -9,14 +9,12 @@ export default class ToDoItems extends Component {
             todos: [],
             isComplete: false,
         }
-
     }
 
     componentDidMount() {
         const url = 'http://localhost:5000/todos/';
         axios.get(`${url}`)
             .then((res) => {
-                console.log(res.data);
                 this.setState({ todos: res.data })
             }).catch(err => {
                 console.log(err);
@@ -26,15 +24,14 @@ export default class ToDoItems extends Component {
     todosList = () => {
         return this.state.todos.map(todo => {
             console.log(todo.todo);
-            return todo.todo
+            return <ToDoItem todo={todo.todo} key={todo._id} />
         });
     }
+
     render() {
         return (
             <div>
                 <h1>ToDoItems</h1>
-                <h2><ToDoItem /></h2>
-                {/* <div>{this.todosList()}</div> */}
                 {this.todosList()}
             </div>
         );

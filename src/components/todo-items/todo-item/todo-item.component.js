@@ -1,7 +1,8 @@
 import React from 'react';
 
 const ToDoItem = (props) => {
-    return <div>ToDoItem</div>
+    console.log({props});
+    return <div>{props.todo}</div>
 }
 
 export default ToDoItem;
