@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import ToDoItem from './todo-item/todo-item.component';
-// import ToDoForm from '../todo-form/todo-form.component';
 
 export default class ToDoItems extends Component {
     constructor(props) {
