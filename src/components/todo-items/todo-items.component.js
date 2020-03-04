@@ -53,6 +53,7 @@ export default class ToDoItems extends Component {
 
         this.setState({ 
             todo: '',
+            todos: this.state.todos.concat(todo)
         });
     }
     //END POST COMPONENT
