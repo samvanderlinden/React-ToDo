@@ -7,11 +7,12 @@ export default class ToDoItems extends Component {
         super(props);
         this.state = {
             todos: [],
-            isComplete: false,
+            isComplete: '',
             todo: ''
         }
     }
 
+    //GET TODO ITEMS
     componentDidMount() {
         const url = 'http://localhost:5000/todos/';
         axios.get(url)
@@ -24,10 +25,16 @@ export default class ToDoItems extends Component {
 
     todosList = () => {
         return this.state.todos.map(todo => {
-            return <ToDoItem key={todo._id} uniqueID={todo._id} currentToDo={todo.todo} deleteToDo={this.deleteToDo} />
+            return <ToDoItem key={todo._id} 
+                             uniqueID={todo._id} 
+                             currentToDo={todo.todo} 
+                             isComplete={todo.isComplete}
+                             deleteToDo={this.deleteToDo} 
+                             toggleToDo={this.toggleToDo}/>
         });
     }
 
+    //DELETE TODO ITEM
     deleteToDo = (id) => {
         const url = `http://localhost:5000/todos/${id}`;
         axios.delete(url)
@@ -36,33 +43,37 @@ export default class ToDoItems extends Component {
         this.setState({ todos: this.state.todos.filter(el => el._id !== id) });
     }
 
-    //START OF POST COMPONENT
+    toggleToDo = () => {
+        console.log(this.state.isComplete);
+        this.setState({isComplete: !this.state.isComplete});
+    }
+
     handleChange = (e) => {
         this.setState({ todo: e.target.value });
     }
 
+    //POST TODO ITEM
     handleSubmit = (event) => {
         event.preventDefault();
         const todo = {
-            todo: this.state.todo
+            todo: this.state.todo,
+            isComplete: false
         }
         const url = 'http://localhost:5000/todos/add';
         axios.post(url, todo)
             .then(res => console.log(res.data));
 
-        this.setState({ 
+        this.setState({
             todo: '',
-            todos: this.state.todos.concat(todo)
+            todos: this.state.todos.concat(todo),
         });
     }
-    //END POST COMPONENT
 
     render() {
         return (
             <div>
                 <h1>ToDoItems</h1>
                 {this.todosList()}
-                
                 <div>
                     <form onSubmit={this.handleSubmit}>
                         <label>
